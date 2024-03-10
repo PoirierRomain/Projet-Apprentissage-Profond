@@ -19,6 +19,12 @@ def renameImagesFile(mypath,prefixe,suffixe):
     for image in listImages:
         # Récupérer l'extension du fichier
         nom_image, extension = os.path.splitext(image)
+        
+        # Vérifier si le fichier a une extension
+        if extension == '':
+            # Supprimer le fichier sans extension
+            os.remove(os.path.join(mypath, image))
+            continue
 
         # Construire le nouveau nom de fichier
         nouveau_nom = f"{prefixe}_{compteur}_{suffixe}{extension}"
@@ -32,6 +38,8 @@ def renameImagesFile(mypath,prefixe,suffixe):
 
         # Incrémenter le compteur
         compteur += 1
+        
+    
         
 def renameCheese(pathbdd, name):
     """
@@ -71,8 +79,9 @@ def renamebdd(pathbdd):
         None
     """
     fromages = ["beaufort","bleu","brie","camembert","comte","morbier","roquefort","tomme_de_savoie"]
+    fromages = ["brie","camembert"]
 
     for fromage in fromages:
         renameCheese(pathbdd, fromage)
         
-# renamebdd("../bdd/")
+renamebdd("")
