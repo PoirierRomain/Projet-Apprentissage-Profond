@@ -4,7 +4,7 @@ import PIL
 from PIL import Image
 import numpy as np
 
-def loadSetImages(cheese, set, pathbdd):
+def loadSetImages(cheese, set, pathbdd, flag, heigth, width):
     ''' 
     La fonction getSetImages récupère les images d'un ensemble spécifié d'un type de cheese
     à partir d'un chemin donné et les stocke dans un dictionnaire où la clé est le numéro d'ordre
@@ -39,10 +39,10 @@ def loadSetImages(cheese, set, pathbdd):
         image = Image.open(pathImages + imageName)
         
         # Redimensionnement de l'image
-        # Valeur à modifier (TO DO)
-        img = image.resize((150,200), Image.BILINEAR)
+        if flag :
+            image = image.resize((width,heigth), Image.BILINEAR)
         # Remplissage de la variable x
-        x = np.asarray(img)
+        x = np.asarray(image)
         
         # Ajouter l'image dans le dictionnaire avec pour nom le compteur
         images_dict[counter] = x
@@ -53,7 +53,7 @@ def loadSetImages(cheese, set, pathbdd):
     # retourner le dictionnaire
     return images_dict
 
-def loadCheeseImage(cheese, pathbdd):
+def loadCheeseImage(cheese, pathbdd,flag, heigth, width):
     '''
         Récupère les images de différents ensembles pour un type de cheese spécifié à partir d'un chemin donné
         et les stocke dans un dictionnaire de dictionnaires.
@@ -76,7 +76,7 @@ def loadCheeseImage(cheese, pathbdd):
     # Pour chaque set
     for set_name in sets:
         # Récupérer le dictionnaire du set
-        set_dict = loadSetImages(cheese, set_name, pathbdd)
+        set_dict = loadSetImages(cheese, set_name, pathbdd,flag, heigth, width)
         
         # Associer au dictionnaire vide la clé : set_name et la valeur : set_dict
         cheese_images[set_name] = set_dict
@@ -84,7 +84,7 @@ def loadCheeseImage(cheese, pathbdd):
     # retourner le dictionnaire
     return cheese_images
 
-def loadbdd(pathbdd):
+def loadbdd(pathbdd,flag, heigth, width):
     '''
         Charge les données d'images pour différents types de fromages à partir
         d'un répertoire donné et les stocke dans un dictionnaire.
@@ -106,7 +106,7 @@ def loadbdd(pathbdd):
     # Pour chaque set
     for cheese in cheeses:
         # Récupérer le dictionnaire du set
-        cheese_dict = loadCheeseImage(cheese, pathbdd);
+        cheese_dict = loadCheeseImage(cheese, pathbdd,flag, heigth, width);
         
         # Associer au dictionnaire vide la clé : set_name et la valeur : set_dict
         cheeseDict[cheese] = cheese_dict
@@ -188,7 +188,7 @@ def getStatsDict(dictBdd):
 
                     
 
-dic = loadbdd("")
+dic = loadbdd("",1,200,200)
 stat = getStatsDict(dic)
 print("nombre d'image", stat[0])
 print("Stat sur la hauteur", stat[1])
