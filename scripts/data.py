@@ -1,13 +1,8 @@
 import matplotlib.pyplot as plt
-import matplotlib.image as mpimg
 import os
-
-def getImage(cheese, nbr, set, pathbdd):
-    imageName = cheese + "_" + nbr + "_" + set
-    imagePath = pathbdd + cheese + "/" + set + "/" + imageName
-    
-    return mpimg.imread(imagePath)
-
+import PIL
+from PIL import Image
+import numpy as np
 
 def loadSetImages(cheese, set, pathbdd):
     ''' 
@@ -40,11 +35,17 @@ def loadSetImages(cheese, set, pathbdd):
     
     # Pour chaque fichier
     for imageName in images:
-        # read l'image avec mpimg.imread()
-        image = mpimg.imread(pathImages + imageName)
+        # read l'image 
+        image = Image.open(pathImages + imageName)
+        
+        # Redimensionnement de l'image
+        # Valeur à modifier (TO DO)
+        img = image.resize((150,200), Image.BILINEAR)
+        # Remplissage de la variable x
+        x = np.asarray(img)
         
         # Ajouter l'image dans le dictionnaire avec pour nom le compteur
-        images_dict[counter] = image
+        images_dict[counter] = x
         
         # Incrémentation du compteur
         counter += 1
@@ -96,7 +97,8 @@ def loadbdd(pathbdd):
         cheeseDict : Le dictionnaire correspondant à la base de donnée.
     '''
     
-    cheeses = ["beaufort","bleu","brie","camembert","comte","morbier","roquefort","tomme_de_savoie"] 
+    cheeses = ["beaufort","bleu","brie","camembert","comte","morbier","roquefort","tomme_de_savoie"]
+    cheeses = ["brie","camembert"]
  
     # Création d'un dictionnaire vide
     cheeseDict = {}
@@ -112,10 +114,102 @@ def loadbdd(pathbdd):
     # retourner le dictionnaire
     return cheeseDict
 
+def getImage(dictBdd, cheese: str, set: str, nbr: int):
+    """
+    Obtient une image à partir d'un dictionnaire de base de données d'images en spécifiant
+    le nom du fromage, le nom de l'ensemble et l'index de l'image.
+
+    Args :
+    dictBdd (dict) : Un dictionnaire représentant la base de données d'images. 
+                     La structure doit être : {nom_du_fromage : {nom_ensemble : {index : image}}}
+    cheese (str) : Le nom du fromage dont on veut obtenir l'image.
+    set_ (str) : Le nom de l'ensemble auquel appartient l'image.
+    nbr (int) : L'index de l'image dans l'ensemble spécifié.
+
+    Returns :
+    L'image correspondant aux paramètres spécifiés.
+    Si les paramètres ne correspondent à aucune image dans la base de données, retourne None.
+
+    """
+    try:
+        return dictBdd[cheese][set][nbr]
+    except KeyError:
+        # Si une clé est manquante, retourne None
+        return None
+
+def getStatsDict(dictBdd):
+    """
+    Calcule des statistiques (nombre d'images, statistiques de hauteur, statistiques de largeur) à partir d'un dictionnaire d'images.
+
+    Paramètres :
+    dictBdd (dict) : Un dictionnaire imbriqué représentant la base de données d'images.
+                 La structure est : {nom_du_fromage : {nom_ensemble : {index : image}}}
+
+    Renvoie :
+    tuple : Un tuple contenant :
+        - nbrImage (int) : Nombre total d'images.
+        - heigthStat (list) : Une liste contenant la hauteur minimale, moyenne et maximale des images.
+                               Format : [hauteur_min, hauteur_moy, hauteur_max]
+        - widthStat (list) : Une liste contenant la largeur minimale, moyenne et maximale des images.
+                              Format : [largeur_min, largeur_moy, largeur_max]
+    """
+
+    nbrImage = 0
+    heigthStat = [None, None, None]
+    widthStat = [None, None, None]
+    
+    for cheese in dictBdd.keys():
+        dictCheese = dictBdd[cheese]
+        for set_name in dictCheese.keys():
+            dictSet = dictCheese[set_name]
+            for index in dictSet.keys():
+                image = dictSet[index]
+                nbrImage += 1
+                heigth = image.shape[0]
+                width = image.shape[1]
+                
+                if heigthStat[0] is None:
+                    heigthStat = [heigth, heigth, heigth]
+                    widthStat = [width, width, width]
+                
+                heigthStat[1] += heigth
+                widthStat[1] += width
+                
+                heigthStat[0] = min(heigth, heigthStat[0])
+                widthStat[0] = min(width, widthStat[0])
+                
+                heigthStat[2] = max(heigth, heigthStat[2])
+                widthStat[2] = max(width, widthStat[2])
+    
+    heigthStat[1] = heigthStat[1] / nbrImage
+    widthStat[1] = widthStat[1] / nbrImage
+    
+    return nbrImage, heigthStat, widthStat
+
+                    
+
 dic = loadbdd("")
-print(list(dic.keys()))
-print(list(dic["brie"].keys()))
-print(list(dic["brie"]["test"].keys()))
+stat = getStatsDict(dic)
+print("nombre d'image", stat[0])
+print("Stat sur la hauteur", stat[1])
+print("Stat sur la largeur", stat[2])
+image = getImage(dic,"brie","train",2)
+print(image.shape)
+# Afficher l'image
+# Créer une figure et des sous-graphiques (axes)
+fig, axes = plt.subplots(1, 2)
+
+# Afficher la première image sur le premier axe
+axes[0].imshow(image)
+axes[0].axis('off')  # Pour ne pas afficher les axes
+
+# Afficher la deuxième image (redimensionnée) sur le deuxième axe
+axes[1].imshow(image)
+axes[1].axis('off')  # Pour ne pas afficher les axes
+
+# Afficher les deux images côte à côte
+plt.show()
+
 
 
 
