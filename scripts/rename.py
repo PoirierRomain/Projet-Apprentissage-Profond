@@ -15,6 +15,7 @@ def renameImagesFile(mypath,prefixe,suffixe):
     
     compteur = 0
     listImages = os.listdir(mypath)
+    print(mypath)
 
     for image in listImages:
         # Récupérer l'extension du fichier
@@ -79,9 +80,9 @@ def renamebdd(pathbdd):
         None
     """
     fromages = ["beaufort","bleu","brie","camembert","comte","morbier","roquefort","tomme_de_savoie"]
-    fromages = ["brie","camembert"]
+    #fromages = ["brie","camembert"]
 
     for fromage in fromages:
         renameCheese(pathbdd, fromage)
         
-renamebdd("")
+renamebdd("../bdd/")

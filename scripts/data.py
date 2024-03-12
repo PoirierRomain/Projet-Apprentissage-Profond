@@ -55,11 +55,11 @@ def loadSetImages(cheese, set, pathbdd, flag, heigth, width):
 
 def loadSetImage(set, pathbdd,flag, heigth, width):
     '''
-        Récupère les images de différents ensembles pour un type de cheese spécifié à partir d'un chemin donné
+        Récupère les images de différents ensembles pour un type de set spécifié à partir d'un chemin donné
         et les stocke dans un dictionnaire de dictionnaires.
 
     Args:
-        cheese (str): Le type de cheese dont on souhaites récupérer les images.
+        set (str): Le type de set dont on souhaites récupérer les images.
         pathbdd (str): Le chemin du répertoire où se trouvent les images.
 
     Returns:
@@ -94,7 +94,7 @@ def loadbdd(pathbdd,flag, heigth, width):
         d'images pour différents types de fromages.
 
     Returns:
-        cheeseDict : Le dictionnaire correspondant à la base de donnée.
+        MyDict : Le dictionnaire correspondant à la base de donnée.
     '''
     
     sets = ["train","test","validation","surplus"]
