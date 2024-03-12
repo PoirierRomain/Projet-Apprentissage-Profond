@@ -35,7 +35,7 @@ def loadSetImages(cheese, set, pathbdd, flag, heigth, width):
     
     # Pour chaque fichier
     for imageName in images:
-        if imageName == "DS_Store":
+        if imageName == ".DS_Store":
             continue
         # read l'image 
         image = Image.open(pathImages + imageName)
@@ -70,13 +70,13 @@ def loadSetImage(set, pathbdd,flag, heigth, width):
 
     '''
     cheeses = ["beaufort","bleu","brie","camembert","comte","morbier","roquefort","tomme_de_savoie"]
-    cheeses = ["brie","camembert"]
     
     # Création d'un dictionnaire vide
     set_images = {}
     
     # Pour chaque set
     for cheese in cheeses:
+        print("chargement du fromage : " + cheese)
         # Récupérer le dictionnaire du set
         set_dict = loadSetImages(cheese, set, pathbdd,flag, heigth, width)
         
@@ -106,6 +106,7 @@ def loadbdd(pathbdd,flag, heigth, width):
     
     # Pour chaque set
     for set in sets:
+        print("chargement du set : " + set)
         # Récupérer le dictionnaire du set
         setDict = loadSetImage(set, pathbdd,flag, heigth, width);
         
@@ -188,7 +189,7 @@ def getStatsDict(dictBdd):
     return nbrImage, heigthStat, widthStat
 
 
-dic = loadbdd("",1,500,500)
+dic = loadbdd("../bdd/",1,500,500)
 stat = getStatsDict(dic)
 print("nombre d'image", stat[0])
 print("Stat sur la hauteur", stat[1])

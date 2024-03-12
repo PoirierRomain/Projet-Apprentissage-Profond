@@ -15,7 +15,6 @@ def renameImagesFile(mypath,prefixe,suffixe):
     
     compteur = 0
     listImages = os.listdir(mypath)
-    print(mypath)
 
     for image in listImages:
         # Récupérer l'extension du fichier
