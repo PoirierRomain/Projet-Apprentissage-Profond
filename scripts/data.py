@@ -46,6 +46,9 @@ def loadSetImages(cheese, set, pathbdd, flag, heigth, width):
         # Remplissage de la variable x
         x = np.asarray(image)
         
+        # Fermeture de l'image
+        image.close()
+        
         # Ajouter l'image dans le dictionnaire avec pour nom le compteur
         images_dict[counter] = x
         
