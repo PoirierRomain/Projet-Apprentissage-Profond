@@ -35,6 +35,8 @@ def loadSetImages(cheese, set, pathbdd, flag, heigth, width):
     
     # Pour chaque fichier
     for imageName in images:
+        if imageName == "DS_Store":
+            continue
         # read l'image 
         image = Image.open(pathImages + imageName)
         
