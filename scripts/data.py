@@ -53,7 +53,7 @@ def loadSetImages(cheese, set, pathbdd, flag, heigth, width):
     # retourner le dictionnaire
     return images_dict
 
-def loadCheeseImage(cheese, pathbdd,flag, heigth, width):
+def loadSetImage(set, pathbdd,flag, heigth, width):
     '''
         Récupère les images de différents ensembles pour un type de cheese spécifié à partir d'un chemin donné
         et les stocke dans un dictionnaire de dictionnaires.
@@ -67,22 +67,22 @@ def loadCheeseImage(cheese, pathbdd,flag, heigth, width):
         où la clé principale est le nom de l'ensemble et la valeur est un dictionnaire d'images.
 
     '''
-    
-    sets = ["surplus", "train", "test", "validation"]
+    cheeses = ["beaufort","bleu","brie","camembert","comte","morbier","roquefort","tomme_de_savoie"]
+    cheeses = ["brie","camembert"]
     
     # Création d'un dictionnaire vide
-    cheese_images = {}
+    set_images = {}
     
     # Pour chaque set
-    for set_name in sets:
+    for cheese in cheeses:
         # Récupérer le dictionnaire du set
-        set_dict = loadSetImages(cheese, set_name, pathbdd,flag, heigth, width)
+        set_dict = loadSetImages(cheese, set, pathbdd,flag, heigth, width)
         
         # Associer au dictionnaire vide la clé : set_name et la valeur : set_dict
-        cheese_images[set_name] = set_dict
+        set_images[cheese] = set_dict
     
     # retourner le dictionnaire
-    return cheese_images
+    return set_images
 
 def loadbdd(pathbdd,flag, heigth, width):
     '''
@@ -97,22 +97,21 @@ def loadbdd(pathbdd,flag, heigth, width):
         cheeseDict : Le dictionnaire correspondant à la base de donnée.
     '''
     
-    cheeses = ["beaufort","bleu","brie","camembert","comte","morbier","roquefort","tomme_de_savoie"]
-    cheeses = ["brie","camembert"]
+    sets = ["train","test","validation","surplus"]
  
     # Création d'un dictionnaire vide
-    cheeseDict = {}
+    MyDict = {}
     
     # Pour chaque set
-    for cheese in cheeses:
+    for set in sets:
         # Récupérer le dictionnaire du set
-        cheese_dict = loadCheeseImage(cheese, pathbdd,flag, heigth, width);
+        setDict = loadSetImage(set, pathbdd,flag, heigth, width);
         
         # Associer au dictionnaire vide la clé : set_name et la valeur : set_dict
-        cheeseDict[cheese] = cheese_dict
+        MyDict[set] = setDict
     
     # retourner le dictionnaire
-    return cheeseDict
+    return MyDict
 
 def getImage(dictBdd, cheese: str, set: str, nbr: int):
     """
@@ -186,14 +185,16 @@ def getStatsDict(dictBdd):
     
     return nbrImage, heigthStat, widthStat
 
-                    
 
-dic = loadbdd("",1,200,200)
+dic = loadbdd("",1,500,500)
 stat = getStatsDict(dic)
 print("nombre d'image", stat[0])
 print("Stat sur la hauteur", stat[1])
 print("Stat sur la largeur", stat[2])
-image = getImage(dic,"brie","train",2)
+image = getImage(dic,"train","brie",2)
+print(dic.keys)
+print(dic["train"].keys())
+print(dic["train"]["brie"].keys())
 print(image.shape)
 # Afficher l'image
 # Créer une figure et des sous-graphiques (axes)
