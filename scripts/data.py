@@ -37,6 +37,7 @@ def loadSetImages(cheese, set, pathbdd, flag, heigth, width):
     for imageName in images:
         # read l'image 
         image = Image.open(pathImages + imageName)
+        image = image.convert('RGB')
         
         # Redimensionnement de l'image
         if flag :
@@ -68,7 +69,7 @@ def loadCheeseImage(cheese, pathbdd,flag, heigth, width):
 
     '''
     
-    sets = ["surplus", "train", "test", "validation"]
+    sets = ["train", "test", "validation"]
     
     # Création d'un dictionnaire vide
     cheese_images = {}
@@ -98,7 +99,6 @@ def loadbdd(pathbdd,flag, heigth, width):
     '''
     
     cheeses = ["beaufort","bleu","brie","camembert","comte","morbier","roquefort","tomme_de_savoie"]
-    cheeses = ["brie","camembert"]
  
     # Création d'un dictionnaire vide
     cheeseDict = {}
@@ -188,7 +188,7 @@ def getStatsDict(dictBdd):
 
                     
 
-dic = loadbdd("",1,200,200)
+dic = loadbdd("./scripts/",1,200,200)
 stat = getStatsDict(dic)
 print("nombre d'image", stat[0])
 print("Stat sur la hauteur", stat[1])
