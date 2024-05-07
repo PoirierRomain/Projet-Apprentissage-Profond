@@ -79,9 +79,8 @@ def renamebdd(pathbdd):
         None
     """
     fromages = ["beaufort","bleu","brie","camembert","comte","morbier","roquefort","tomme_de_savoie"]
-    #fromages = ["brie","camembert"]
 
     for fromage in fromages:
         renameCheese(pathbdd, fromage)
         
-renamebdd("../bdd/")
+renamebdd("./scripts/")

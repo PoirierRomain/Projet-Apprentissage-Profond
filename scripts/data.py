@@ -39,6 +39,7 @@ def loadSetImages(cheese, set, pathbdd, flag, heigth, width):
             continue
         # read l'image 
         image = Image.open(pathImages + imageName)
+        image = image.convert('RGB')
         
         # Redimensionnement de l'image
         if flag :
@@ -72,7 +73,8 @@ def loadSetImage(set, pathbdd,flag, heigth, width):
         où la clé principale est le nom de l'ensemble et la valeur est un dictionnaire d'images.
 
     '''
-    cheeses = ["beaufort","bleu","brie","camembert","comte","morbier","roquefort","tomme_de_savoie"]
+   
+    sets = ["train", "test", "validation"]
     
     # Création d'un dictionnaire vide
     set_images = {}
@@ -102,7 +104,7 @@ def loadbdd(pathbdd,flag, heigth, width):
         MyDict : Le dictionnaire correspondant à la base de donnée.
     '''
     
-    sets = ["train","test","validation","surplus"]
+    cheeses = ["beaufort","bleu","brie","camembert","comte","morbier","roquefort","tomme_de_savoie"]
  
     # Création d'un dictionnaire vide
     MyDict = {}
@@ -191,8 +193,7 @@ def getStatsDict(dictBdd):
     
     return nbrImage, heigthStat, widthStat
 
-
-dic = loadbdd("../bdd/",1,500,500)
+dic = loadbdd("./scripts/",1,200,200)
 stat = getStatsDict(dic)
 print("nombre d'image", stat[0])
 print("Stat sur la hauteur", stat[1])
