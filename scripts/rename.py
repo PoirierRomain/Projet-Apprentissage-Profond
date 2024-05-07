@@ -27,7 +27,7 @@ def renameImagesFile(mypath,prefixe,suffixe):
             continue
 
         # Construire le nouveau nom de fichier
-        nouveau_nom = f"{prefixe}_{compteur}_{suffixe}{extension}"
+        nouveau_nom = f"{prefixe}_{compteur}_{suffixe}{".png"}"
 
         # Chemin actuel et nouveau chemin pour le fichier
         ancien_chemin = os.path.join(mypath, image)

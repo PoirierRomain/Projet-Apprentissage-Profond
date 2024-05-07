@@ -35,6 +35,8 @@ def loadSetImages(cheese, set, pathbdd, flag, heigth, width):
     
     # Pour chaque fichier
     for imageName in images:
+        if imageName == ".DS_Store":
+            continue
         # read l'image 
         image = Image.open(pathImages + imageName)
         image = image.convert('RGB')
@@ -45,6 +47,9 @@ def loadSetImages(cheese, set, pathbdd, flag, heigth, width):
         # Remplissage de la variable x
         x = np.asarray(image)
         
+        # Fermeture de l'image
+        image.close()
+        
         # Ajouter l'image dans le dictionnaire avec pour nom le compteur
         images_dict[counter] = x
         
@@ -54,13 +59,13 @@ def loadSetImages(cheese, set, pathbdd, flag, heigth, width):
     # retourner le dictionnaire
     return images_dict
 
-def loadCheeseImage(cheese, pathbdd,flag, heigth, width):
+def loadSetImage(set, pathbdd,flag, heigth, width):
     '''
-        Récupère les images de différents ensembles pour un type de cheese spécifié à partir d'un chemin donné
+        Récupère les images de différents ensembles pour un type de set spécifié à partir d'un chemin donné
         et les stocke dans un dictionnaire de dictionnaires.
 
     Args:
-        cheese (str): Le type de cheese dont on souhaites récupérer les images.
+        set (str): Le type de set dont on souhaites récupérer les images.
         pathbdd (str): Le chemin du répertoire où se trouvent les images.
 
     Returns:
@@ -68,22 +73,23 @@ def loadCheeseImage(cheese, pathbdd,flag, heigth, width):
         où la clé principale est le nom de l'ensemble et la valeur est un dictionnaire d'images.
 
     '''
-    
+   
     sets = ["train", "test", "validation"]
     
     # Création d'un dictionnaire vide
-    cheese_images = {}
+    set_images = {}
     
     # Pour chaque set
-    for set_name in sets:
+    for cheese in cheeses:
+        print("chargement du fromage : " + cheese)
         # Récupérer le dictionnaire du set
-        set_dict = loadSetImages(cheese, set_name, pathbdd,flag, heigth, width)
+        set_dict = loadSetImages(cheese, set, pathbdd,flag, heigth, width)
         
         # Associer au dictionnaire vide la clé : set_name et la valeur : set_dict
-        cheese_images[set_name] = set_dict
+        set_images[cheese] = set_dict
     
     # retourner le dictionnaire
-    return cheese_images
+    return set_images
 
 def loadbdd(pathbdd,flag, heigth, width):
     '''
@@ -95,24 +101,25 @@ def loadbdd(pathbdd,flag, heigth, width):
         d'images pour différents types de fromages.
 
     Returns:
-        cheeseDict : Le dictionnaire correspondant à la base de donnée.
+        MyDict : Le dictionnaire correspondant à la base de donnée.
     '''
     
     cheeses = ["beaufort","bleu","brie","camembert","comte","morbier","roquefort","tomme_de_savoie"]
  
     # Création d'un dictionnaire vide
-    cheeseDict = {}
+    MyDict = {}
     
     # Pour chaque set
-    for cheese in cheeses:
+    for set in sets:
+        print("chargement du set : " + set)
         # Récupérer le dictionnaire du set
-        cheese_dict = loadCheeseImage(cheese, pathbdd,flag, heigth, width);
+        setDict = loadSetImage(set, pathbdd,flag, heigth, width);
         
         # Associer au dictionnaire vide la clé : set_name et la valeur : set_dict
-        cheeseDict[cheese] = cheese_dict
+        MyDict[set] = setDict
     
     # retourner le dictionnaire
-    return cheeseDict
+    return MyDict
 
 def getImage(dictBdd, cheese: str, set: str, nbr: int):
     """
@@ -186,14 +193,15 @@ def getStatsDict(dictBdd):
     
     return nbrImage, heigthStat, widthStat
 
-                    
-
 dic = loadbdd("./scripts/",1,200,200)
 stat = getStatsDict(dic)
 print("nombre d'image", stat[0])
 print("Stat sur la hauteur", stat[1])
 print("Stat sur la largeur", stat[2])
-image = getImage(dic,"brie","train",2)
+image = getImage(dic,"train","brie",2)
+print(dic.keys)
+print(dic["train"].keys())
+print(dic["train"]["brie"].keys())
 print(image.shape)
 # Afficher l'image
 # Créer une figure et des sous-graphiques (axes)
