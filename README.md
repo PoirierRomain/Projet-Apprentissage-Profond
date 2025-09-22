@@ -1,7 +1,7 @@
 ![Python Version](https://img.shields.io/badge/python-3.9%2B-blue.svg)
 ![License](https://img.shields.io/badge/license-MIT-green.svg)
 
-This repo contains the dataset for a Convolutional Neural Network (CNN) project developed during our 2A internship at ENSEEIHT. It aims to classify different types of cheese from images.
+This repo contains the dataset for a Convolutional Neural Network (CNN) project developed at ENSEEIHT. It aims to classify different types of cheese from images.
 
 **Authors:** Lucas Chatellier, Paul Croizet, Yassine Mehmouden, Romain Poirier
 
