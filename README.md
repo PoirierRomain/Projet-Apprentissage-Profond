@@ -1,7 +1,7 @@
 ![Python Version](https://img.shields.io/badge/python-3.9%2B-blue.svg)
 ![License](https://img.shields.io/badge/license-MIT-green.svg)
 
-This repo contains the dataset for a Convolutional Neural Network (CNN) project developed at ENSEEIHT. It aims to classify different types of cheese from images.
+This repo contains the dataset and the code for training a Convolutional Neural Network (CNN) project developed at ENSEEIHT. It aims to classify different types of cheese from images.
 
 **Authors:** Lucas Chatellier, Paul Croizet, Yassine Mehmouden, Romain Poirier
 
@@ -18,7 +18,7 @@ The goal of this project is to recognize and classify the following cheeses:
 - Roquefort
 - Bleu d’Auvergne
 
-We chose these cheeses to cover various types (soft, cooked) and to study distinctions in **color, shape, and texture**. For example, Morbier, Roquefort, and Bleu d’Auvergne are distinguished by color, while Beaufort and Comté require shape analysis, and Camembert vs. Brie requires texture analysis.
+We chose these cheeses to cover various types (soft, cooked) and to study distinctions in color, shape, and texture. For example, Morbier, Roquefort, and Bleu d’Auvergne are distinguished by color, while Beaufort and Comté require shape analysis, and Camembert vs. Brie requires texture analysis.
 
 ## Dataset
 
