@@ -23,7 +23,7 @@ We chose these cheeses to cover various types (soft, cooked) and to study distin
 ## Dataset
 
 - **Images:** 200 images per cheese, totaling 1,600 images.
-- **Sources:** Mostly collected from online search engines; Tomme de Savoie also photographed manually.
+- **Sources:** Mostly collected from online search engines, Tomme de Savoie also photographed manually.
 - **Diversity:** Images include various angles, lighting, and cheese cuts to enhance model generalization.
 - **Scripts:** Python scripts included to rename images meaningfully and load the dataset into structured dictionaries.
 
